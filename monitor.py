@@ -4,6 +4,7 @@ from watchdog.events import FileSystemEventHandler
 import os
 import time
 from datetime import datetime
+import csv
 
 
 
@@ -18,9 +19,32 @@ class MyHandler(FileSystemEventHandler):
         # Controlliamo se il percorso modificato è un file
         if os.path.isfile(event.src_path):
             try:
+
+                # Ottieni la data/ora dell'ultima modifica del file
+                modification_time = os.path.getmtime(event.src_path)
+                modification_time = time.ctime(modification_time)
+
                 # Apriamo il file in modalità lettura
                 with open(event.src_path, 'r') as file:        # Leggiamo e stampiamo il contenuto del file
-                    print(file.read())
+                    reader = csv.reader(file)
+                    # Inizializza un dizionario 
+                    logger = {
+                        "path": event.src_path,
+                        "datetime": modification_time,
+                        "data": []
+                    }
+
+                    # Itera su ogni riga del file
+                    for row in reader:
+                        # Estrai i dati dalle colonne 2, 3 e 4
+                        name = row[1]
+                        value = float(row[2]+"."+row[3])
+
+                        # Inserisci i dati nel dizionario
+                        logger["data"].append({"name": name, "value": value})
+
+                # Stampa il dizionario
+                print(logger)
 
             except Exception as e:
                 print(f"Si è verificato un errore durante la lettura del file: {e}")
