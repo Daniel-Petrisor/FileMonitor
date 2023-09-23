@@ -6,15 +6,18 @@ import time
 from datetime import datetime
 import csv
 
+from rich import print # Opzionale
 
 
 file_path = 'D:/Github/FileMonitor/Current.txt'
 
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
-        now = datetime.now()                                    # Ottieni l'ora corrente
-        now_str = now.strftime("%d/%m/%Y, %H:%M:%S")            # Formatta l'ora come stringa
-        print("File modificato: ",now_str, event.src_path)      # Stampiamo il percorso del file che è stato modificato
+        # Ottieni l'ora corrente e formatta l'ora come stringa
+        now = datetime.now()                                    
+        now_str = now.strftime("%d/%m/%Y, %H:%M:%S")
+        # Stampiamo il percorso del file che è stato modificato      
+        print("File modificato: ",now_str, event.src_path) 
 
         # Controlliamo se il percorso modificato è un file
         if os.path.isfile(event.src_path):
@@ -45,9 +48,10 @@ class MyHandler(FileSystemEventHandler):
 
                 # Stampa il dizionario
                 print(logger)
+                
 
             except Exception as e:
-                print(f"Si è verificato un errore durante la lettura del file: {e}")
+                print(f"[red]Si è verificato un errore durante la lettura del file:[/red] {e}")
 
 
 
@@ -67,6 +71,7 @@ if __name__ == "__main__":
 
     try:
         while True:
+            print("[italic red]In attesa della modifica del file[/italic red]")
             time.sleep(1)
     except KeyboardInterrupt:
         observer.stop()

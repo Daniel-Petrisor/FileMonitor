@@ -12,5 +12,10 @@ puoi passare il percorso della directory al metodo schedule e impostare il param
 1. Installare la libreria watchdog
     `pip install watchdog`
 
+
+1. Installare la libreria Rich (opzionale)
+    `pip install rich`
+    La libreria Rich offre molte funzionalità per la formattazione del terminale, colorazione del testo, la creazione di tabelle, la stampa di codice sorgente con evidenziazione della sintassi, e molto altro ancora.
+
 1.  Sostituire 'percorso_del_tuo_file' con il percorso del file che desideri monitorare.
 
